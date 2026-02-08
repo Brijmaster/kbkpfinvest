@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KBKP Finvest – Smart Loan Check</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI, Arial;
+    background:linear-gradient(135deg,#0b1d2a,#123a5c,#1b6ca8);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+}
+.container{
+    width:360px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(12px);
+    border-radius:18px;
+    padding:30px 25px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+input,button{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:10px;
+    font-size:14px;
+}
+button{
+    background:linear-gradient(90deg,#ffd700,#ffb703);
+    font-weight:bold;
+    cursor:pointer;
+}
+.hidden{display:none;}
+.score{
+    font-size:44px;
+    font-weight:bold;
+    margin:12px 0;
+}
+.footer{
+    margin-top:20px;
+    font-size:12px;
+    opacity:.95;
+}
+.footer a{
+    color:#fff;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2 style="color:#ffd700;">KBKP FINVEST</h2>
+<p style="font-size:13px;">Instant Loan Eligibility Check</p>
+
+<!-- FORM -->
+<div id="formSection">
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="tel" id="mobile" placeholder="Mobile Number" maxlength="10">
+    <input type="text" id="pan" placeholder="PAN Card Number" maxlength="10">
+    <button onclick="showResult()">APPLY</button>
+</div>
+
+<!-- RESULT -->
+<div id="resultSection" class="hidden">
+    <h3>WOW! YOU HAVE AMAZING SCORE</h3>
+    <div class="score" id="score"></div>
+    <button onclick="goAhead()">GO AHEAD</button>
+</div>
+
+<!-- COMMON FOOTER -->
+<div class="footer">
+    
+    📞 <a href="tel:+919157094544"><strong>+91 91570 94544</strong></a><br>
+    💬 <a href="https://wa.me/919157094544"><strong>+91 91570 94544</strong></a><br>
+    ✉️ <a href="mailto:kbkpfinvest@gmail.com">kbkpfinvest@gmail.com</a>
+</div>
+
+</div>
+
+<script>
+function showResult(){
+    const panRegex=/^[A-Z]{5}[0-9]{4}[A-Z]$/;
+    const name=nameInput=nameInput=document.getElementById("name").value.trim();
+    const mobile=document.getElementById("mobile").value.trim();
+    const pan=document.getElementById("pan").value.trim().toUpperCase();
+
+    if(!name || mobile.length!==10 || !panRegex.test(pan)){
+        alert("Please enter valid details");
+        return;
+    }
+
+    document.getElementById("score").innerText =
+        Math.floor(Math.random()*(800-700+1))+700;
+
+    document.getElementById("formSection").classList.add("hidden");
+    document.getElementById("resultSection").classList.remove("hidden");
+}
+
+function goAhead()
+
+{
+const phone = '919157094544';
+const message = encodeURIComponent('Hi KBKP Finvest, I want to proceed with my loan application.');
+window.open(`https://sites.google.com/view/kbkpforcust/instant-loan?authuser=0`, '_blank');
+}
+</script>
+
+</body>
+</html>
