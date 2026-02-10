@@ -1,120 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KBKP Finvest – Smart Loan Check</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBKP FINVEST | Fast Loans</title>
+    <style>
+        :root {
+            --primary-blue: #1d4e89;
+            --accent-gold: #f2a900;
+            --white: #ffffff;
+        }
 
-<style>
-body{
-    margin:0;
-    font-family:Segoe UI, Arial;
-    background:linear-gradient(135deg,#0b1d2a,#123a5c,#1b6ca8);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#fff;
-}
-.container{
-    width:360px;
-    background:rgba(255,255,255,.12);
-    backdrop-filter:blur(12px);
-    border-radius:18px;
-    padding:30px 25px;
-    text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,.45);
-}
-input,button{
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border:none;
-    border-radius:10px;
-    font-size:14px;
-}
-button{
-    background:linear-gradient(90deg,#ffd700,#ffb703);
-    font-weight:bold;
-    cursor:pointer;
-}
-.hidden{display:none;}
-.score{
-    font-size:44px;
-    font-weight:bold;
-    margin:12px 0;
-}
-.footer{
-    margin-top:20px;
-    font-size:12px;
-    opacity:.95;
-}
-.footer a{
-    color:#fff;
-    text-decoration:none;
-}
-</style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            overflow: hidden;
+        }
+
+        .calc-icon {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(29, 78, 137, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Form Container */
+        .login-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border-top: 5px solid var(--primary-blue);
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 1rem;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .apply-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        .apply-btn:hover { transform: scale(1.05); background: #153a66; }
+
+        /* Modal / Popup */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .popup {
+            background: white;
+            width: 320px;
+            padding: 40px;
+            border-radius: 30px; /* Big rounded square */
+            text-align: center;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .cibil-symbol {
+            font-size: 50px;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .score-val {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .eligible-amt {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            color: #555;
+        }
+
+        .amount-highlight {
+            display: block;
+            font-size: 1.8rem;
+            color: #e67e22;
+            font-weight: bold;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <div class="bg-animation" id="bg"></div>
 
-<h2 style="color:#ffd700;">KBKP FINVEST</h2>
-<p style="font-size:13px;">Instant Loan Eligibility Check</p>
+    <div class="login-card">
+        <img src="logo.jpeg" alt="KBKP FINVEST" class="logo">
+        <h3>Check Loan Eligibility</h3>
+        <input type="text" placeholder="Full Name" required>
+        <input type="text" placeholder="PAN Card No" required>
+        <input type="tel" placeholder="Mobile No" required>
+        <input type="text" placeholder="Pincode" required>
+        <button class="apply-btn" onclick="showEligibility()">APPLY NOW</button>
+    </div>
 
-<!-- FORM -->
-<div id="formSection">
-    <input type="text" id="name" placeholder="Customer Name">
-    <input type="tel" id="mobile" placeholder="Mobile Number" maxlength="10">
-    <input type="text" id="pan" placeholder="PAN Card Number" maxlength="10">
-    <button onclick="showResult()">APPLY</button>
-</div>
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <div class="cibil-symbol">🛡️</div>
+            <div style="font-weight:bold; color:#777;">CIBIL SCORE</div>
+            <div class="score-val" id="score">750</div>
+            <hr>
+            <div class="eligible-amt">
+                You are eligible for:
+                <span class="amount-highlight" id="amount">₹000,000</span>
+            </div>
+            <button onclick="closePopup()" style="margin-top:20px; cursor:pointer; border:none; background:none; color:blue; text-decoration:underline;">Close</button>
+        </div>
+    </div>
 
-<!-- RESULT -->
-<div id="resultSection" class="hidden">
-    <h3>WOW! YOU HAVE AMAZING SCORE</h3>
-    <div class="score" id="score"></div>
-    <button onclick="goAhead()">GO AHEAD</button>
-</div>
+    <script>
+        // Generate floating background icons
+        const bg = document.getElementById('bg');
+        const icons = ['+', '−', '×', '÷', '%', '∑', '√'];
+        for (let i = 0; i < 20; i++) {
+            let div = document.createElement('div');
+            div.className = 'calc-icon';
+            div.innerText = icons[Math.floor(Math.random() * icons.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            div.style.animationDelay = (Math.random() * 5) + 's';
+            bg.appendChild(div);
+        }
 
-<!-- COMMON FOOTER -->
-<div class="footer">
-    
-    📞 <a href="tel:+919157094544"><strong>+91 91570 94544</strong></a><br>
-    💬 <a href="https://wa.me/919157094544"><strong>+91 91570 94544</strong></a><br>
-    ✉️ <a href="mailto:kbkpfinvest@gmail.com">kbkpfinvest@gmail.com</a>
-</div>
+        function showEligibility() {
+            const amounts = [110000, 230000, 310000, 430000, 550000, 421000, 240000];
+            const randomScore = Math.floor(Math.random() * (800 - 700 + 1)) + 700;
+            const randomAmount = amounts[Math.floor(Math.random() * amounts.length)];
 
-</div>
+            document.getElementById('score').innerText = randomScore;
+            document.getElementById('amount').innerText = '₹' + randomAmount.toLocaleString('en-IN');
+            document.getElementById('overlay').style.display = 'flex';
+        }
 
-<script>
-function showResult(){
-    const panRegex=/^[A-Z]{5}[0-9]{4}[A-Z]$/;
-    const name=nameInput=nameInput=document.getElementById("name").value.trim();
-    const mobile=document.getElementById("mobile").value.trim();
-    const pan=document.getElementById("pan").value.trim().toUpperCase();
-
-    if(!name || mobile.length!==10 || !panRegex.test(pan)){
-        alert("Please enter valid details");
-        return;
-    }
-
-    document.getElementById("score").innerText =
-        Math.floor(Math.random()*(800-700+1))+700;
-
-    document.getElementById("formSection").classList.add("hidden");
-    document.getElementById("resultSection").classList.remove("hidden");
-}
-
-function goAhead()
-
-{
-const phone = '919157094544';
-const message = encodeURIComponent('Hi KBKP Finvest, I want to proceed with my loan application.');
-window.open(`https://sites.google.com/view/kbkpforcust/instant-loan?authuser=0`, '_blank');
-}
-</script>
-
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
